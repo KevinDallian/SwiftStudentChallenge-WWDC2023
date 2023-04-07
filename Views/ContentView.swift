@@ -26,11 +26,18 @@ struct ContentView: View {
                 Text("\(ivm.turn)")
                     .font(.title)
                 HStack {
-                    Circle()
-                        .fill(.blue)
-                    Circle()
-                        .fill(.red)
-                }
+                    VStack{
+                        Text("\(ivm.characters[0].hp)")
+                        Circle()
+                            .fill(.blue)
+                    }
+                   
+                    VStack{
+                        Text("\(ivm.characters[1].hp)")
+                        Circle()
+                            .fill(.red)
+                    }
+                }.padding()
             }
                    
             HStack{
@@ -38,11 +45,14 @@ struct ContentView: View {
                     Button("Attack"){
                         ivm.action(choice: "attack", character1: ivm.characters[0], character2: ivm.characters[1])
                         if ivm.characters[1].hp <= 0 {
-                            makeAlert(title: "You Win!", message: "You reduce your enemy'shealth to 0!")
+                            makeAlert(title: "You Win!", message: "You reduce your enemy's health to 0!")
                         }else if ivm.characters[0].hp <= 0{
                             makeAlert(title: "You Lose!", message: "Enemy reduce your health to 0!")
                         }
-                        ivm.enemyAction()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            ivm.enemyAction()
+                        }
+                        
                     }
                     .buttonStyle(.borderedProminent)
                     Button("Defend"){

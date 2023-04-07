@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 class ItemViewModel : ObservableObject{
     @Published var logs : [Log] = []
@@ -13,7 +14,9 @@ class ItemViewModel : ObservableObject{
     @Published var characters : [Character] = []
     
     func addLog(turn : Int, character : String, message : String){
-        logs.insert(Log(turn: turn, character: character, message: message), at: 0)
+        withAnimation {
+            logs.insert(Log(turn: turn, character: character, message: message), at: 0)
+        }
     }
     
     func addCharacter(name : String, hp : Int, baseAttack : Int, criticalChance : Int){
@@ -46,12 +49,21 @@ class ItemViewModel : ObservableObject{
         var message = ""
         if getCrit(critChance: character1.criticalChance){
             attack = character1.baseAttack * 2
-            message = "attacks Red Circle with Critical hit for \(attack) hp"
+            message = "attacks \(character2.name) with Critical hit"
         }else{
             attack = character1.baseAttack
-            message = "attacks Red Circle for \(attack) hp"
+            message = "attacks \(character2.name)"
+        }
+        if character2.isDefending{
+            attack /= 2
+            character2.isDefending = false
+            message += " (Defended)."
+        }else{
+            message += "."
         }
         character2.hp -= attack
+        message += " Damage : \(attack)"
+        
         addLog(turn: turn, character: character1.name, message: message)
         turn += 1
     }
