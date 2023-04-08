@@ -13,6 +13,11 @@ class ItemViewModel : ObservableObject{
     @Published var turn : Int = 1
     @Published var characters : [Character] = []
     
+    init(){
+        addCharacter(name: "Blue Circle", hp: 100, baseAttack: 10, criticalChance: 20)
+        addCharacter(name: "Red Circle", hp: 100, baseAttack: 10, criticalChance: 20)
+    }
+    
     func addLog(turn : Int, character : String, message : String){
         withAnimation {
             logs.insert(Log(turn: turn, character: character, message: message), at: 0)
@@ -23,9 +28,8 @@ class ItemViewModel : ObservableObject{
         characters.append(Character(name: name, hp: hp, baseAttack: baseAttack, criticalChance: criticalChance))
     }
     
-    init(){
-        addCharacter(name: "Blue Circle", hp: 100, baseAttack: 10, criticalChance: 20)
-        addCharacter(name: "Red Circle", hp: 100, baseAttack: 10, criticalChance: 20)
+    func addPotion(character: Character, potion: Potion){
+        character.potion.append(potion)
     }
     
     func resetGame(){
@@ -65,40 +69,38 @@ class ItemViewModel : ObservableObject{
         message += " Damage : \(attack)"
         
         addLog(turn: turn, character: character1.name, message: message)
-        turn += 1
     }
     
     func defend(character : Character){
         character.isDefending = true
         addLog(turn: turn, character: character.name, message: "switch stance to defend stance")
-        turn += 1
     }
     
-    func potion(){
-        addLog(turn: turn, character: "Blue Circle", message: "Use Potion")
-        turn += 1
+    func potion(character1 : Character, character2 : Character, potion : Potion){
+        addLog(turn: turn, character: character1.name, message: "Use Potion")
     }
     
     func action(choice : String, character1: Character, character2: Character){
+        if character1.isDefending {
+            character1.isDefending = false
+        }
         switch choice{
             case "attack":
                 attack(character1: character1, character2: character2)
             case "defend":
                 defend(character: character1)
             case "potion":
-                potion()
+                potion(character1 : character1, character2: character2, potion : Potion(name: "", desc: "", debuff: 2, affectedTurn: 3, price: 0))
             default:
                 print("Player doesn't choose action")
         }
     }
     
     func enemyAction(){
-        var choice : Int
-        if characters[1].isDefending == true{
-            choice = Int.random(in: 1...2)
-        }else{
-            choice = Int.random(in: 1...3)
+        if characters[1].isDefending{
+            characters[1].isDefending = false
         }
+        var choice = Int.random(in: 1...3)
         if choice == 1{ // attack
             action(choice: "attack", character1: characters[1], character2: characters[0])
         }else if choice == 2{ // potion
@@ -106,5 +108,6 @@ class ItemViewModel : ObservableObject{
         }else{ // defend
             action(choice: "defend", character1: characters[1], character2: characters[0])
         }
+        turn += 1
     }
 }
