@@ -2,7 +2,6 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var ivm = ItemViewModel()
-    @State var selectedButton = "action"
     @State var alertTitle = ""
     @State var alertMessage = ""
     @State var showAlert = false
@@ -16,27 +15,27 @@ struct ContentView: View {
     var body: some View {
         VStack {
             VStack{
-                Text("Turn")
+                Text("\(ivm.whosTurn)!")
                     .font(.largeTitle.weight(.bold))
-                Text("\(ivm.turn)")
+                Text("Turn \(ivm.turn)")
                     .font(.title)
                 HStack {
                     VStack{
                         Text("\(ivm.characters[0].hp)")
+                            .font(.title.weight(.semibold))
                         Circle()
                             .fill(.blue)
                     }
                    
                     VStack{
                         Text("\(ivm.characters[1].hp)")
+                            .font(.title.weight(.semibold))
                         Circle()
                             .fill(.red)
                     }
                 }.padding()
             }
-            if selectedButton == "action"{
-                ActionView(ivm : ivm, alertTitle: $alertTitle, alertMessage: $alertMessage, showAlert: $showAlert)
-            }
+            ActionView(ivm : ivm, alertTitle: $alertTitle, alertMessage: $alertMessage, showAlert: $showAlert)
         }.alert(alertTitle, isPresented: $showAlert) {
             Button("Back to menu"){
                 ivm.resetGame()
