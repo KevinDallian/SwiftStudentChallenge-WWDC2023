@@ -35,6 +35,7 @@ struct ContentView: View {
                     }
                 }.padding()
             }
+            Divider()
             ActionView(ivm : ivm, alertTitle: $alertTitle, alertMessage: $alertMessage, showAlert: $showAlert)
         }.alert(alertTitle, isPresented: $showAlert) {
             Button("Back to menu"){

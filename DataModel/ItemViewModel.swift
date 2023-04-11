@@ -16,6 +16,9 @@ class ItemViewModel : ObservableObject{
     
     init(){
         addCharacter(name: "Blue Circle", hp: 100, baseAttack: 10, criticalChance: 20)
+        for _ in 1 ... 3{
+            addPotion(character: characters[0], potion: createPotion(index: Int.random(in: 1..<3)))
+        }
         addCharacter(name: "Red Circle", hp: 100, baseAttack: 10, criticalChance: 20)
     }
     
@@ -35,7 +38,7 @@ class ItemViewModel : ObservableObject{
         case 1:
             potion = Potion(name: "Healing Potion", desc: "Heals the user for 20 hp.", type: "Heal", debuff: 20, affectedTurn: 3, price: 50)
         case 2:
-            potion = Potion(name: "Weakness Potion", desc: "Reduce enemy's attack to 5", type: "Attack Debuff", debuff: 2, affectedTurn: 3, price: 50)
+            potion = Potion(name: "Weakness Potion", desc: "Reduce enemy's attack to 5", type: "Attack Debuff", debuff: 5, affectedTurn: 3, price: 50)
         default:
             print("Index must be 1 or 2")
         }
@@ -43,7 +46,7 @@ class ItemViewModel : ObservableObject{
     }
     
     func addPotion(character: Character, potion: Potion){
-        character.potion.append(potion)
+        character.potions.append(potion)
     }
     
     func resetGame(){
@@ -91,16 +94,21 @@ class ItemViewModel : ObservableObject{
     }
     
     func potion(character1 : Character, character2 : Character, potion : Potion){
-        var message = "uses \(potion.name) that \(potion.desc.lowercased())"
+        let message = "uses \(potion.name) that \(potion.desc.lowercased())"
         if potion.type == "Heal"{
             character1.hp += 20
         }else if potion.type == "Attack Debuff"{
             character2.baseAttack -= potion.debuff
         }
         addLog(turn: turn, character: character1.name, message: message)
+        
+        if let index = characters[0].potions.firstIndex(of: potion){
+            characters[0].potions.remove(at: index)
+        }
+        
     }
     
-    func action(choice : String, character1: Character, character2: Character){
+    func action(choice : String, character1: Character, character2: Character, potionUsed : Potion?){
         if character1.isDefending {
             character1.isDefending = false
         }
@@ -110,7 +118,7 @@ class ItemViewModel : ObservableObject{
             case "defend":
                 defend(character: character1)
             case "potion":
-            potion(character1 : character1, character2: character2, potion : Potion(name: "", desc: "", type: "", debuff: 2, affectedTurn: 3, price: 0))
+            potion(character1 : character1, character2: character2, potion : potionUsed ?? Potion(name: "No Potion", desc: "User does not use potion", type: "Nil", debuff: 0, affectedTurn: 0, price: 0))
             default:
                 print("Player doesn't choose action")
         }
@@ -125,11 +133,11 @@ class ItemViewModel : ObservableObject{
         }
         let choice = Int.random(in: 1...3)
         if choice == 1 { // attack
-            action(choice: "attack", character1: characters[1], character2: characters[0])
+            action(choice: "attack", character1: characters[1], character2: characters[0], potionUsed: nil)
         }else if choice == 2{ // potion
-            action(choice: "potion", character1: characters[1], character2: characters[0])
+            action(choice: "potion", character1: characters[1], character2: characters[0], potionUsed: characters[1].potions.first)
         }else{ // defend
-            action(choice: "defend", character1: characters[1], character2: characters[0])
+            action(choice: "defend", character1: characters[1], character2: characters[0], potionUsed: nil)
         }
         withAnimation{
             turn += 1

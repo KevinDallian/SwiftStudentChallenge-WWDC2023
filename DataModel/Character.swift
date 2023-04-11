@@ -14,7 +14,7 @@ class Character : Identifiable, ObservableObject {
     var baseAttack : Int
     var criticalChance : Int
     var isDefending : Bool
-    var potion : [Potion] = []
+    var potions : [Potion] = []
     
     init(name: String, hp: Int, baseAttack: Int, criticalChance: Int) {
         self.name = name

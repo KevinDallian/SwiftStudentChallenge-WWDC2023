@@ -23,7 +23,7 @@ struct ActionView: View {
         HStack{
             VStack{
                 Button{
-                    ivm.action(choice: "attack", character1: ivm.characters[0], character2: ivm.characters[1])
+                    ivm.action(choice: "attack", character1: ivm.characters[0], character2: ivm.characters[1], potionUsed: nil)
                     if ivm.characters[1].hp <= 0 {
                         makeAlert(title: "You Win!", message: "You reduce your enemy's health to 0!")
                     }else if ivm.characters[0].hp <= 0{
@@ -41,7 +41,7 @@ struct ActionView: View {
                 .frame(width: 200.0)
                 .buttonStyle(.borderedProminent)
                 Button{
-                    ivm.action(choice: "defend", character1: ivm.characters[0], character2: ivm.characters[1])
+                    ivm.action(choice: "defend", character1: ivm.characters[0], character2: ivm.characters[1], potionUsed: nil)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         ivm.enemyAction()
                     }
@@ -58,9 +58,6 @@ struct ActionView: View {
                     }
                     
 //                    ivm.action(choice: "potion", character1: ivm.characters[0], character2: ivm.characters[1])
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-//                        ivm.enemyAction()
-//                    }
                 }label:{
                     Text("Potion")
                         .font(.title)
@@ -89,7 +86,7 @@ struct ActionView: View {
                         }
                     }
                 }else {
-                    PotionView()
+                    PotionView(ivm : ivm, potionButton: $potionButton)
                 }
                 
                 

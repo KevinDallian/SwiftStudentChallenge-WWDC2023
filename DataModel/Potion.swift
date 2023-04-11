@@ -6,8 +6,16 @@
 //
 
 import Foundation
+import SwiftUI
 
-class Potion: Identifiable, ObservableObject{
+class Potion: ObservableObject, Hashable, Identifiable{
+    static func == (lhs: Potion, rhs: Potion) -> Bool {
+        return lhs.name == rhs.name
+    }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    var id = UUID().uuidString
     var name : String
     var desc : String
     var type : String
