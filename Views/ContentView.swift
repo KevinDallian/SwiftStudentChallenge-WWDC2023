@@ -26,7 +26,6 @@ struct ContentView: View {
                         Circle()
                             .fill(.blue)
                     }
-                   
                     VStack{
                         Text("\(ivm.characters[1].hp)")
                             .font(.title.weight(.semibold))

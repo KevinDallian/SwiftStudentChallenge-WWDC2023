@@ -36,7 +36,7 @@ class ItemViewModel : ObservableObject{
         var potion : Potion = Potion(name: "Healing Potion", desc: "Heals the user for 20 hp.", type: "Heal", debuff: 20, affectedTurn: 0, price: 50)
         switch index{
         case 1:
-            potion = Potion(name: "Healing Potion", desc: "Heals the user for 20 hp.", type: "Heal", debuff: 20, affectedTurn: 3, price: 50)
+            potion = Potion(name: "Healing Potion", desc: "Heals the user for 20 hp.", type: "Heal", debuff: 20, affectedTurn: 0, price: 50)
         case 2:
             potion = Potion(name: "Weakness Potion", desc: "Reduce enemy's attack to 5", type: "Attack Debuff", debuff: 5, affectedTurn: 3, price: 50)
         default:
@@ -100,12 +100,12 @@ class ItemViewModel : ObservableObject{
         }else if potion.type == "Attack Debuff"{
             character2.baseAttack -= potion.debuff
         }
-        addLog(turn: turn, character: character1.name, message: message)
-        
-        if let index = characters[0].potions.firstIndex(of: potion){
-            characters[0].potions.remove(at: index)
+        if let index = character1.potions.firstIndex(of: potion){
+            potion.turnUsed = turn
+            character2.debuffs.append(potion)
+            character1.potions.remove(at: index)
         }
-        
+        addLog(turn: turn, character: character1.name, message: message)
     }
     
     func action(choice : String, character1: Character, character2: Character, potionUsed : Potion?){
@@ -123,24 +123,53 @@ class ItemViewModel : ObservableObject{
                 print("Player doesn't choose action")
         }
         withAnimation{
-            whosTurn = "Enemy's Turn"
+            endTurn()
         }
     }
     
     func enemyAction(){
+        var choice = 0
         if characters[1].isDefending{
             characters[1].isDefending = false
         }
-        let choice = Int.random(in: 1...3)
+        if characters[1].potions.isEmpty{
+            choice = Int.random(in: 1...2)
+        }else{
+            choice = Int.random(in: 1...3)
+        }
+        
         if choice == 1 { // attack
             action(choice: "attack", character1: characters[1], character2: characters[0], potionUsed: nil)
-        }else if choice == 2{ // potion
-            action(choice: "potion", character1: characters[1], character2: characters[0], potionUsed: characters[1].potions.first)
-        }else{ // defend
+        }else if choice == 2{ // defend
             action(choice: "defend", character1: characters[1], character2: characters[0], potionUsed: nil)
+        }else{ // potion
+            action(choice: "potion", character1: characters[1], character2: characters[0], potionUsed: characters[1].potions.first)
         }
-        withAnimation{
+    }
+    
+    func checkDebuffExpire(character : Character)-> Bool{
+        if let potion = character.debuffs.first{
+            if turn - potion.turnUsed >= potion.affectedTurn {
+                return true
+            }
+        }
+        return false
+    }
+    
+    func endTurn(){
+        if whosTurn == "Your Turn"{
+            whosTurn = "Enemy's Turn"
             turn += 1
+            if checkDebuffExpire(character: characters[0]){
+                characters[0].baseAttack += 5
+                characters[0].debuffs.removeFirst()
+            }
+            if checkDebuffExpire(character: characters[1]){
+                characters[1].baseAttack += 5
+                characters[1].debuffs.removeFirst()
+            }
+            
+        }else{
             whosTurn = "Your Turn"
         }
     }

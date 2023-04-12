@@ -23,10 +23,12 @@ struct PotionView: View {
                         HStack{
                             RoundedRectangle(cornerRadius: 10)
                                 .frame(maxWidth: 40, maxHeight: 40)
-                            VStack{
+                                .foregroundColor(Color.gray)
+                            VStack(alignment: .leading){
                                 Text("\(potion.name)")
                                 Text("\(potion.desc)")
                             }
+                            Spacer()
                             Button("Use"){
                                 ivm.potion(character1: ivm.characters[0], character2: ivm.characters[1], potion: potion)
                                 potionButton = false
@@ -37,6 +39,7 @@ struct PotionView: View {
                         }.frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
+                .padding(.trailing, 10)
             }
         }
         

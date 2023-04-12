@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Character : Identifiable, ObservableObject {
+class Character : Identifiable, ObservableObject{
     var id = UUID().uuidString
     var name : String
     var hp : Int
@@ -15,6 +15,7 @@ class Character : Identifiable, ObservableObject {
     var criticalChance : Int
     var isDefending : Bool
     var potions : [Potion] = []
+    var debuffs : [Potion] = []
     
     init(name: String, hp: Int, baseAttack: Int, criticalChance: Int) {
         self.name = name

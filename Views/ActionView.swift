@@ -56,8 +56,6 @@ struct ActionView: View {
                     withAnimation(){
                         potionButton.toggle()
                     }
-                    
-//                    ivm.action(choice: "potion", character1: ivm.characters[0], character2: ivm.characters[1])
                 }label:{
                     Text("Potion")
                         .font(.title)
@@ -88,8 +86,6 @@ struct ActionView: View {
                 }else {
                     PotionView(ivm : ivm, potionButton: $potionButton)
                 }
-                
-                
             }.padding(.trailing, 10)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .font(.title2)
