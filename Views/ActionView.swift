@@ -38,6 +38,7 @@ struct ActionView: View {
                         .font(.title)
                         .frame(width: 150.0, height: 60.0)
                 }
+                .disabled(ivm.whosTurn == "Enemy's Turn")
                 .frame(width: 200.0)
                 .buttonStyle(.borderedProminent)
                 Button{
@@ -51,6 +52,7 @@ struct ActionView: View {
                         .font(.title)
                         .frame(width: 150.0, height: 60.0)
                 }
+                .disabled(ivm.whosTurn == "Enemy's Turn")
                 .buttonStyle(.borderedProminent)
                 Button{
                     withAnimation(){
@@ -61,6 +63,7 @@ struct ActionView: View {
                         .font(.title)
                         .frame(width: 150.0, height: 60.0)
                 }
+                .disabled(ivm.whosTurn == "Enemy's Turn")
                 .buttonStyle(.borderedProminent)
             }
             .padding(.leading, 10.0)
