@@ -30,7 +30,7 @@ struct PotionView: View {
                             }
                             Spacer()
                             Button("Use"){
-                                ivm.potion(character1: ivm.characters[0], character2: ivm.characters[1], potion: potion)
+                                ivm.action(choice: "potion", character1: ivm.characters[0], character2: ivm.characters[1], potionUsed: potion)
                                 potionButton = false
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                                     ivm.enemyAction()

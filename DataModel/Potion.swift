@@ -22,14 +22,12 @@ class Potion: ObservableObject, Hashable, Identifiable{
     var debuff : Int
     var affectedTurn : Int
     var turnUsed : Int = 0
-    var price : Int
     
-    init(name: String, desc: String, type: String, debuff: Int, affectedTurn: Int, price: Int) {
+    init(name: String, desc: String, type: String, debuff: Int, affectedTurn: Int) {
         self.name = name
         self.desc = desc
         self.type = type
         self.debuff = debuff
         self.affectedTurn = affectedTurn
-        self.price = price
     }
 }
