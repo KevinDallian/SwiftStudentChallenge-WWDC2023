@@ -47,6 +47,7 @@ struct ActionView: View {
                     }
                 }
                 HStack{
+                    Spacer()
                     Button{
                         ivm.action(choice: "attack", character1: ivm.characters[0], character2: ivm.characters[1], potionUsed: nil)
                         if ivm.characters[1].hp <= 0 {
@@ -60,12 +61,14 @@ struct ActionView: View {
                         potionButton = false
                     } label:{
                         Text("Attack")
-                            .font(.title)
-                            .frame(width: 150.0, height: 60.0)
+                            .font(.title.weight(.bold))
+                            .frame(width: 200, height: 60)
                     }
                     .disabled(ivm.whosTurn == "Enemy's Turn")
-                    .frame(width: 200.0)
                     .buttonStyle(.borderedProminent)
+                    .cornerRadius(70)
+                    .shadow(color: Color(red: 0, green: 185/225, blue: 1).opacity(0.53), radius: 0, x: 3, y: 5)
+                    Spacer()
                     Button{
                         ivm.action(choice: "defend", character1: ivm.characters[0], character2: ivm.characters[1], potionUsed: nil)
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -74,28 +77,31 @@ struct ActionView: View {
                         potionButton = false
                     }label:{
                         Text("Defend")
-                            .font(.title)
-                            .frame(width: 150.0, height: 60.0)
+                            .font(.title.weight(.bold))
+                            .frame(width: 200, height: 60)
+                            
                     }
                     .disabled(ivm.whosTurn == "Enemy's Turn")
                     .buttonStyle(.borderedProminent)
+                    .cornerRadius(70)
+                    .shadow(color: Color(red: 0, green: 185/225, blue: 1).opacity(0.53), radius: 0, x: 3, y: 5)
+                    Spacer()
                     Button{
                         withAnimation(){
                             potionButton.toggle()
                         }
                     }label:{
                         Text("Potion")
-                            .font(.title)
-                            .frame(width: 150.0, height: 60.0)
+                            .font(.title.weight(.bold))
+                            .frame(width: 200, height: 60)
                     }
                     .disabled(ivm.whosTurn == "Enemy's Turn")
                     .buttonStyle(.borderedProminent)
-                }
-                .padding(.leading, 10.0)
-                .frame(minWidth: 250)
-            }.padding(.trailing, 10)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .font(.title2)
+                    .cornerRadius(70)
+                    .shadow(color: Color(red: 0, green: 185/225, blue: 1).opacity(0.53), radius: 0, x: 3, y: 5)
+                    Spacer()
+                }.padding(.bottom, 100)
+            }
         }.frame(maxHeight: 450)
     }
 }

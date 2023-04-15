@@ -15,7 +15,6 @@ struct ContentView: View {
     var body: some View {
         ZStack{
             Image("background")
-                .offset(y: -32)
             VStack {
                 VStack{
                     Spacer()
@@ -23,7 +22,6 @@ struct ContentView: View {
                         .font(.largeTitle.weight(.bold))
                     Text("Turn \(ivm.turn)")
                         .font(.title)
-                    Spacer()
                     HStack {
                         VStack{
                             Text("\(ivm.characters[0].hp)")
@@ -41,7 +39,6 @@ struct ContentView: View {
                         }
                     }.padding()
                 }
-                .frame(minHeight: 800)
                 ActionView(ivm : ivm, alertTitle: $alertTitle, alertMessage: $alertMessage, showAlert: $showAlert)
             }.alert(alertTitle, isPresented: $showAlert) {
                 Button("Back to menu"){
