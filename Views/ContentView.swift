@@ -5,6 +5,7 @@ struct ContentView: View {
     @State var alertTitle = ""
     @State var alertMessage = ""
     @State var showAlert = false
+    @Environment(\.presentationMode) var presentationMode
     
     func makeAlert(title : String, message : String){
         alertTitle = title
@@ -22,17 +23,34 @@ struct ContentView: View {
                         .font(.largeTitle.weight(.bold))
                     Text("Turn \(ivm.turn)")
                         .font(.title)
+                    Spacer()
                     HStack {
                         VStack{
-                            Text("\(ivm.characters[0].hp)")
-                                .font(.title.weight(.semibold))
+                            HStack(alignment: .bottom, spacing: 0){
+                                Rectangle()
+                                    .fill(.green)
+                                    .frame(width: Double(ivm.characters[0].hp) * 2, height: 25)
+                                    .border(.black)
+                                Rectangle()
+                                    .fill(.red)
+                                    .frame(width: Double(100 - ivm.characters[0].hp) * 2, height: 25)
+                                    .border(.black)
+                            }.offset(x: -30)
                             Image("knight_blue")
                                 .resizable()
                                 .frame(width: 400, height: 400)
                         }
                         VStack{
-                            Text("\(ivm.characters[1].hp)")
-                                .font(.title.weight(.semibold))
+                            HStack(alignment: .bottom, spacing: 0){
+                                Rectangle()
+                                    .fill(.green)
+                                    .frame(width: Double(ivm.characters[1].hp) * 2, height: 25)
+                                    .border(.black)
+                                Rectangle()
+                                    .fill(.red)
+                                    .frame(width: Double(100 - ivm.characters[1].hp) * 2, height: 25)
+                                    .border(.black)
+                            }.offset(x: 30)
                             Image("knight_red")
                                 .resizable()
                                 .frame(width: 400, height: 400)
@@ -42,7 +60,7 @@ struct ContentView: View {
                 ActionView(ivm : ivm, alertTitle: $alertTitle, alertMessage: $alertMessage, showAlert: $showAlert)
             }.alert(alertTitle, isPresented: $showAlert) {
                 Button("Back to menu"){
-                    ivm.resetGame()
+                    self.presentationMode.wrappedValue.dismiss()
                 }
             } message: {
                 Text(alertMessage)

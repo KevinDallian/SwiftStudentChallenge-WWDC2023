@@ -8,28 +8,36 @@
 import SwiftUI
 
 struct MenuView: View {
-    @State private var animationAmount = 1.0
     var body: some View {
         NavigationView{
-            VStack{
-                Text("Game Title")
-                    .font(.largeTitle.weight(.bold))
-                    .scaleEffect(animationAmount)
-                    .animation(.easeInOut(duration: 1).repeatForever(autoreverses: true), value: animationAmount)
-                    .onAppear{
-                        animationAmount = 1.25
+            ZStack{
+                Image("background")
+                VStack{
+                    Image("logo_white")
+                        .resizable()
+                        .frame(width: 500, height: 500)
+                    NavigationLink{
+                        ContentView()
+                    }label: {
+                        Text("Start Game")
+                            .font(.title.weight(.semibold))
+                            .frame(width: 175, height: 50)
                     }
-                NavigationLink{
-                    ContentView()
-                }label: {
-                    Text("Start Game")
-                        .font(.title)
+                    .buttonStyle(.borderedProminent)
+                    NavigationLink{
+                        TutorialView()
+                    }label: {
+                        Text("How to Play")
+                            .font(.title.weight(.semibold))
+                            .frame(width: 175, height: 50)
+                    }
+                    .buttonStyle(.borderedProminent)
                 }
-                .buttonStyle(.borderedProminent)
             }
         }.navigationViewStyle(.stack)
-        
-        
+            .onAppear(perform: {
+                MusicPlayer.sharedMusic.playMusic()
+            })
     }
 }
 

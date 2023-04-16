@@ -14,11 +14,13 @@ struct ActionView: View {
     @Binding var showAlert : Bool
     @State var potionButton : Bool = false
     
+    
     func makeAlert(title : String, message : String){
         alertTitle = title
         alertMessage = message
         showAlert = true
     }
+    
     var body: some View {
         ZStack{
             RoundedRectangle(cornerRadius: 50)
@@ -28,24 +30,26 @@ struct ActionView: View {
                     if !potionButton{
                         HStack{
                             Text("Log History")
-                                .font(.largeTitle)
+                                .font(.largeTitle.weight(.semibold))
                             Spacer()
                         }
                         if ivm.logs.isEmpty{
                             Text("This page here represents your and enemy history actions. Use this page to keep track with enemy's actions and plan ahead.")
+                                .font(.title)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.trailing)
                         }
                         else{
                             ForEach(ivm.logs, id: \.self){ log in
                                 Text("[Turn \(log.turn)] : \(log.character) \(log.message)")
+                                    .font(.title)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
                         }
                     }else {
                         PotionView(ivm : ivm, potionButton: $potionButton)
                     }
-                }
+                }.padding()
                 HStack{
                     Spacer()
                     Button{
@@ -102,7 +106,7 @@ struct ActionView: View {
                     Spacer()
                 }.padding(.bottom, 100)
             }
-        }.frame(maxHeight: 450)
+        }.frame(maxHeight: 600)
     }
 }
 

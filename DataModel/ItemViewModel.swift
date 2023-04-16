@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AVFoundation
 import SwiftUI
 
 class ItemViewModel : ObservableObject{
@@ -13,6 +14,7 @@ class ItemViewModel : ObservableObject{
     @Published var turn : Int = 1
     @Published var characters : [Character] = []
     @Published var whosTurn : String = "Your Turn"
+    var music : AVAudioPlayer!
     
     init(){
         addCharacter(name: "Blue Circle", hp: 100, baseAttack: 10, criticalChance: 20)
@@ -22,7 +24,7 @@ class ItemViewModel : ObservableObject{
             addPotion(character: characters[1], potion: createPotion(index: Int.random(in: 1..<3)))
         }
     }
-    
+
     func addLog(turn : Int, character : String, message : String){
         withAnimation {
             logs.insert(Log(turn: turn, character: character, message: message), at: 0)
@@ -101,9 +103,13 @@ class ItemViewModel : ObservableObject{
     func potion(character1 : Character, character2 : Character, potion : Potion){
         let message = "uses \(potion.name) that \(potion.desc.lowercased())"
         if potion.type == "Heal"{
-            character1.hp += 20
+            if character1.hp + 20 >= 100{
+                character1.hp = 100
+            }else{
+                character1.hp += 20
+            }
         }else if potion.type == "Attack Debuff"{
-            character2.baseAttack /= potion.debuff
+            character2.baseAttack -= potion.debuff
         }
         if let index = character1.potions.firstIndex(of: potion){
             potion.turnUsed = turn
@@ -170,12 +176,12 @@ class ItemViewModel : ObservableObject{
             whosTurn = "Your Turn"
             turn += 1
             if checkDebuffExpire(character: characters[0]){
-                characters[0].baseAttack *= 2
+                characters[0].baseAttack += 5
                 characters[0].debuffs.removeFirst()
                 addLog(turn: turn, character: characters[0].name, message: "'s weakness has been repelled")
             }
             if checkDebuffExpire(character: characters[1]){
-                characters[1].baseAttack *= 2
+                characters[1].baseAttack += 5
                 characters[1].debuffs.removeFirst()
                 addLog(turn: turn, character: characters[1].name, message: "'s weakness has been repelled")
             }
