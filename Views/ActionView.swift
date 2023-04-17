@@ -9,17 +9,8 @@ import SwiftUI
 
 struct ActionView: View {
     @StateObject var ivm : ItemViewModel
-    @Binding var alertTitle : String
-    @Binding var alertMessage : String
-    @Binding var showAlert : Bool
     @State var potionButton : Bool = false
     
-    
-    func makeAlert(title : String, message : String){
-        alertTitle = title
-        alertMessage = message
-        showAlert = true
-    }
     
     var body: some View {
         ZStack{
@@ -57,11 +48,6 @@ struct ActionView: View {
                     Spacer()
                     Button{
                         ivm.action(choice: "attack", character1: ivm.characters[0], character2: ivm.characters[1], potionUsed: nil)
-                        if ivm.characters[1].hp <= 0 {
-                            makeAlert(title: "You Win!", message: "You reduce your enemy's health to 0!")
-                        }else if ivm.characters[0].hp <= 0{
-                            makeAlert(title: "You Lose!", message: "Enemy reduce your health to 0!")
-                        }
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             ivm.enemyAction()
                         }

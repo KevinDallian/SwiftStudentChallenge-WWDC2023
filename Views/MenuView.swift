@@ -23,7 +23,7 @@ struct MenuView: View {
                     NavigationLink{
                         ContentView()
                     }label: {
-                        Text("Start Game")
+                        Text("Play Game")
                             .font(.largeTitle.weight(.semibold))
                             .frame(width: 200, height: 60)
                     }

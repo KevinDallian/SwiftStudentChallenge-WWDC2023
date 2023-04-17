@@ -14,6 +14,9 @@ class ItemViewModel : ObservableObject{
     @Published var turn : Int = 1
     @Published var characters : [Character] = []
     @Published var whosTurn : String = "Your Turn"
+    @Published var alertTitle = ""
+    @Published var alertMessage = ""
+    @Published var showAlert = false
     var music : AVAudioPlayer!
     
     init(){
@@ -23,6 +26,12 @@ class ItemViewModel : ObservableObject{
             addPotion(character: characters[0], potion: createPotion(index: Int.random(in: 1..<3)))
             addPotion(character: characters[1], potion: createPotion(index: Int.random(in: 1..<3)))
         }
+    }
+    
+    func makeAlert(title : String, message : String){
+        alertTitle = title
+        alertMessage = message
+        showAlert = true
     }
 
     func addLog(turn : Int, character : String, message : String){
@@ -137,6 +146,11 @@ class ItemViewModel : ObservableObject{
         }
         withAnimation{
             endTurn()
+            if characters[1].hp <= 0 {
+                makeAlert(title: "You Win!", message: "You reduce your enemy's health to 0!")
+            }else if characters[0].hp <= 0{
+                makeAlert(title: "You Lose!", message: "Enemy reduce your health to 0!")
+            }
         }
     }
     

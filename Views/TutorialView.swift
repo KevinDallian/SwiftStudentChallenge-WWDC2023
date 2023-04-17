@@ -20,7 +20,7 @@ struct TutorialView: View {
                         Text("How to Play")
                             .font(.title.weight(.bold))
                         Text("Knight’s Honor is a turn-based game where characters take turns to do action. You are the blue knight standing on the left side of the screen. The goal of the game is to reduce enemy’s(red knight) health point to 0. Both characters have base health of 100. To achieve the goal you can choose 3 actions provided.")
-                            .font(.body)
+                            .font(.title)
                     }
                     Section{
                         HStack{
@@ -32,6 +32,7 @@ struct TutorialView: View {
                             Spacer()
                         }
                         Text("Attack button is used for attacking the enemy with a base attack of 10 HP. There are 20% chances of the attack to be critical that doubles the amount of base attack (20 HP).")
+                            .font(.title)
                     }
                     Section{
                         HStack{
@@ -48,7 +49,7 @@ struct TutorialView: View {
         For example, your character is in defense stance and the enemy hits you with critical hit(20 HP), your character HP will be reduce by 10 HP because of the defense stance.
 
         Defense stance will be reset in end of turn.
-        """)
+        """).font(.title)
                     }
                     Section{
                         HStack{
@@ -66,6 +67,7 @@ struct TutorialView: View {
         """)
                     }
                 }
+                .font(.title)
                 .padding()
                 .background(.regularMaterial)
                 .cornerRadius(5)

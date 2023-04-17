@@ -2,16 +2,9 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var ivm = ItemViewModel()
-    @State var alertTitle = ""
-    @State var alertMessage = ""
-    @State var showAlert = false
-    @Environment(\.presentationMode) var presentationMode
     
-    func makeAlert(title : String, message : String){
-        alertTitle = title
-        alertMessage = message
-        showAlert = true
-    }
+    @Environment(\.presentationMode) var presentationMode
+
     
     var body: some View {
         ZStack{
@@ -60,13 +53,14 @@ struct ContentView: View {
                         }
                     }.padding()
                 }
-                ActionView(ivm : ivm, alertTitle: $alertTitle, alertMessage: $alertMessage, showAlert: $showAlert)
-            }.alert(alertTitle, isPresented: $showAlert) {
+                ActionView(ivm : ivm)
+                
+            }.alert(ivm.alertTitle, isPresented: $ivm.showAlert) {
                 Button("Back to menu"){
                     self.presentationMode.wrappedValue.dismiss()
                 }
             } message: {
-                Text(alertMessage)
+                Text(ivm.alertMessage)
             }
         }
     }
