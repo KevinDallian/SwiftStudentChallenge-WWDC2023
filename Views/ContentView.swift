@@ -34,13 +34,13 @@ struct ContentView: View {
                             HStack(alignment: .bottom, spacing: 0){
                                 Rectangle()
                                     .fill(.green)
-                                    .frame(width: Double(ivm.characters[0].hp) * 1.5, height: 25)
+                                    .frame(width: Double(ivm.characters[0].hp) * 1.75, height: 25)
                                     .border(.black)
                                 Rectangle()
                                     .fill(.red)
-                                    .frame(width: Double(100 - ivm.characters[0].hp) * 1.5, height: 25)
+                                    .frame(width: Double(100 - ivm.characters[0].hp) * 1.75, height: 25)
                                     .border(.black)
-                            }
+                            }.offset(x: -30)
                             Image("knight_blue")
                                 .resizable()
                         }
@@ -48,13 +48,13 @@ struct ContentView: View {
                             HStack(alignment: .bottom, spacing: 0){
                                 Rectangle()
                                     .fill(.green)
-                                    .frame(width: Double(ivm.characters[1].hp) * 1.5, height: 25)
+                                    .frame(width: Double(ivm.characters[1].hp) * 1.75, height: 25)
                                     .border(.black)
                                 Rectangle()
                                     .fill(.red)
-                                    .frame(width: Double(100 - ivm.characters[1].hp) * 1.5, height: 25)
+                                    .frame(width: Double(100 - ivm.characters[1].hp) * 1.75, height: 25)
                                     .border(.black)
-                            }.offset()
+                            }.offset(x: 30)
                             Image("knight_red")
                                 .resizable()
                         }

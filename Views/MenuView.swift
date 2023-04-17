@@ -11,30 +11,32 @@ struct MenuView: View {
     var body: some View {
         NavigationView{
             ZStack{
-                Image("background")
+                Image("menubackground")
                     .resizable()
-                    .aspectRatio(contentMode: .fill)
                     .ignoresSafeArea()
                 VStack{
                     Image("logo_white")
                         .resizable()
-                        .frame(width: 500, height: 500)
+                        .frame(width: 450, height: 450)
+                        .offset(y: -50)
+                    Spacer()
                     NavigationLink{
                         ContentView()
                     }label: {
                         Text("Start Game")
-                            .font(.title.weight(.semibold))
-                            .frame(width: 175, height: 50)
+                            .font(.largeTitle.weight(.semibold))
+                            .frame(width: 200, height: 60)
                     }
                     .buttonStyle(.borderedProminent)
                     NavigationLink{
                         TutorialView()
                     }label: {
                         Text("How to Play")
-                            .font(.title.weight(.semibold))
-                            .frame(width: 175, height: 50)
+                            .font(.largeTitle.weight(.semibold))
+                            .frame(width: 200, height: 60)
                     }
                     .buttonStyle(.borderedProminent)
+                    Spacer()
                 }
             }
         }.navigationViewStyle(.stack)

@@ -36,6 +36,7 @@ struct ActionView: View {
                         }
                         if ivm.logs.isEmpty{
                             Text("This page here represents your and enemy history actions. Use this page to keep track with enemy's actions and plan ahead.")
+                                .font(.title)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .foregroundColor(.black)
                                 .padding(.trailing)
