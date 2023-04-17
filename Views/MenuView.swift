@@ -12,6 +12,9 @@ struct MenuView: View {
         NavigationView{
             ZStack{
                 Image("background")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .ignoresSafeArea()
                 VStack{
                     Image("logo_white")
                         .resizable()

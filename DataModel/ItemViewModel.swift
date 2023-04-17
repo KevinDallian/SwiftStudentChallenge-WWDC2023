@@ -17,8 +17,8 @@ class ItemViewModel : ObservableObject{
     var music : AVAudioPlayer!
     
     init(){
-        addCharacter(name: "Blue Circle", hp: 100, baseAttack: 10, criticalChance: 20)
-        addCharacter(name: "Red Circle", hp: 100, baseAttack: 10, criticalChance: 20)
+        addCharacter(name: "Blue Knight", hp: 100, baseAttack: 10, criticalChance: 20)
+        addCharacter(name: "Red Knight", hp: 100, baseAttack: 10, criticalChance: 20)
         for _ in 1 ... 3{
             addPotion(character: characters[0], potion: createPotion(index: Int.random(in: 1..<3)))
             addPotion(character: characters[1], potion: createPotion(index: Int.random(in: 1..<3)))

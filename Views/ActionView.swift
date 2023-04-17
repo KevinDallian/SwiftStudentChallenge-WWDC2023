@@ -30,19 +30,21 @@ struct ActionView: View {
                     if !potionButton{
                         HStack{
                             Text("Log History")
-                                .font(.largeTitle.weight(.semibold))
+                                .font(.title.weight(.semibold))
+                                .foregroundColor(.black)
                             Spacer()
                         }
                         if ivm.logs.isEmpty{
                             Text("This page here represents your and enemy history actions. Use this page to keep track with enemy's actions and plan ahead.")
-                                .font(.title)
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                                .foregroundColor(.black)
                                 .padding(.trailing)
                         }
                         else{
                             ForEach(ivm.logs, id: \.self){ log in
                                 Text("[Turn \(log.turn)] : \(log.character) \(log.message)")
                                     .font(.title)
+                                    .foregroundColor(.black)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
                         }
@@ -66,7 +68,7 @@ struct ActionView: View {
                     } label:{
                         Text("Attack")
                             .font(.title.weight(.bold))
-                            .frame(width: 200, height: 60)
+                            .padding(.horizontal, 10)
                     }
                     .disabled(ivm.whosTurn == "Enemy's Turn")
                     .buttonStyle(.borderedProminent)
@@ -82,8 +84,7 @@ struct ActionView: View {
                     }label:{
                         Text("Defend")
                             .font(.title.weight(.bold))
-                            .frame(width: 200, height: 60)
-                            
+                            .padding(.horizontal, 10)
                     }
                     .disabled(ivm.whosTurn == "Enemy's Turn")
                     .buttonStyle(.borderedProminent)
@@ -97,7 +98,7 @@ struct ActionView: View {
                     }label:{
                         Text("Potion")
                             .font(.title.weight(.bold))
-                            .frame(width: 200, height: 60)
+                            .padding(.horizontal, 10)
                     }
                     .disabled(ivm.whosTurn == "Enemy's Turn")
                     .buttonStyle(.borderedProminent)
@@ -106,7 +107,7 @@ struct ActionView: View {
                     Spacer()
                 }.padding(.bottom, 100)
             }
-        }.frame(maxHeight: 600)
+        }
     }
 }
 
